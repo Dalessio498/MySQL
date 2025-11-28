@@ -1,0 +1,155 @@
+Create database PaisCidade_db
+use PaisCidade_db
+drop database PaisCidade_db
+
+create table Pais (
+	ID_Pais int primary key auto_increment,
+	Nome_Pais varchar (120),
+	Populacao_Pais int,
+	Area_Pais int
+)
+
+create table Cidade (
+	ID_Cidade int primary key auto_increment,
+    Nome_Cidade varchar (150),
+    Populacao_Cidade int,
+	Avaliacao_Cidade int,
+     
+    ID_Pais int,
+    foreign key (ID_Pais) references Pais(ID_Pais)
+)
+
+INSERT INTO Pais (ID_Pais, Nome_Pais, Populacao_Pais, Area_Pais) VALUES
+(1, 'Rússia', 144000000, 17098246),
+(2, 'Alemanha', 83200000, 357022),
+(3, 'França', 67800000, 643801),
+(4, 'Reino Unido', 67200000, 242495),
+(5, 'Itália', 59100000, 301340),
+(6, 'Espanha', 47400000, 505990),
+(7, 'Ucrânia', 41400000, 603550),
+(8, 'Polônia', 38000000, 312679),
+(9, 'Romênia', 19300000, 238397),
+(10, 'Países Baixos', 17500000, 41543),
+(11, 'Bélgica', 11600000, 30528),
+(12, 'Grécia', 10400000, 131957),
+(13, 'Portugal', 10300000, 92090),
+(14, 'Suécia', 10400000, 450295),
+(15, 'Hungria', 9700000, 93028),
+(16, 'Áustria', 9000000, 83879),
+(17, 'Suíça', 8700000, 41277),
+(18, 'Sérvia', 6900000, 88361),
+(19, 'Dinamarca', 5800000, 42933),
+(20, 'Finlândia', 5500000, 338425)
+
+
+ALTER TABLE Cidade DROP FOREIGN KEY Cidade_ibfk_1;
+
+INSERT INTO Pais (ID_Pais, Nome_Pais, Populacao_Pais, Area_Pais) VALUES
+(25, 'Tchéquia', 10700000, 78867),
+(26, 'Noruega', 5400000, 385207),
+(27, 'Irlanda', 5000000, 70273),
+(28, 'Islândia', 370000, 103000),
+(29, 'Croácia', 3900000, 56594);
+
+INSERT INTO Cidade (ID_Cidade, Nome_Cidade, Populacao_Cidade, Avaliacao_Cidade, ID_Pais) VALUES
+(1, 'Paris', 2100000, 5, 3),
+(2, 'Berlim', 3700000, 4, 2),
+(3, 'Madrid', 3300000, 4, 6),
+(4, 'Roma', 2800000, 5, 5),
+(5, 'Londres', 9000000, 5, 4),
+(6, 'Amsterdã', 900000, 5, 10),
+(7, 'Bruxelas', 1200000, 3, 11),
+(8, 'Varsóvia', 1800000, 4, 8),
+(9, 'Kiev', 2900000, 3, 7),
+(10, 'Lisboa', 500000, 5, 13),
+(11, 'Viena', 1900000, 5, 16),
+(12, 'Budapeste', 1700000, 4, 15),
+(13, 'Praga', 1300000, 5, 25),
+(14, 'Atenas', 3000000, 4, 12),
+(15, 'Estocolmo', 975000, 5, 14),
+(16, 'Copenhague', 800000, 5, 19),
+(17, 'Helsinque', 650000, 4, 20),
+(18, 'Oslo', 700000, 4, 26),
+(19, 'Dublin', 1200000, 4, 27),
+(20, 'Bucareste', 1800000, 3, 9),
+(21, 'Moscou', 12500000, 4, 1),
+(22, 'Berna', 140000, 4, 17),
+(23, 'Belgrado', 1400000, 4, 18),
+(24, 'Reiquiavique', 130000, 3, 28),
+(25, 'Zagreb', 800000, 4, 29);
+
+INSERT INTO Cidade (ID_Cidade, Nome_Cidade, Populacao_Cidade, Avaliacao_Cidade, ID_Pais) VALUES
+(100, 'TESTE 1', null, null, null),
+(99, 'TESTE 2', null, null, null);
+
+/*--------------------------------------------*/
+
+SELECT 
+	p.ID_Pais AS "ID do Pais",
+    p.Nome_Pais AS "Nome do Pais",
+    p.Populacao_Pais AS "População do Pais(Aproximada)",
+    p.Area_Pais AS "Area do Pais km²",
+    
+    c.ID_Cidade AS "ID da Cidade",
+    c.Nome_Cidade AS "Nome da Cidade",
+    c.ID_Pais AS "ID do Pais",
+    c.Populacao_Cidade AS "População da Cidade (Aproximada)",
+    c.Avaliacao_Cidade AS "Avaliação da Cidade"
+    
+FROM Pais p
+RIGHT JOIN CIdade c
+ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
+
+SELECT p.Nome_Pais, c.Nome_Cidade
+FROM Pais p
+LEFT JOIN Cidade c ON p.ID_Pais = c.ID_Pais
+
+UNION
+
+SELECT p.Nome_Pais, c.Nome_Cidade
+FROM Pais p
+RIGHT JOIN Cidade c ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
+
+SELECT 
+c.Nome_Cidade as "Nome da Cidade",
+c.Avaliacao_Cidade as "Avaliacao da cidade",
+p.Nome_Pais AS "Nome do Pais"
+
+FROM Pais p
+INNER JOIN Cidade c ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
+
+SELECT 
+c.Nome_Cidade as "Nome da Cidade",
+c.Avaliacao_Cidade as "Avaliacao da cidade",
+p.Nome_Pais AS "Nome do Pais"
+
+FROM Pais p
+LEFT JOIN Cidade c ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
+
+SELECT 
+c.Nome_Cidade as "Nome da Cidade",
+c.Avaliacao_Cidade as "Avaliacao da cidade",
+p.Nome_Pais AS "Nome do Pais"
+
+FROM Pais p
+RIGHT JOIN Cidade c ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
+
+SELECT 
+c.Nome_Cidade as "Nome da Cidade",
+c.Avaliacao_Cidade as "Avaliacao da cidade",
+p.Nome_Pais AS "Nome do Pais"
+
+FROM Pais p
+CROSS JOIN Cidade c ON p.ID_Pais = c.ID_Pais;
+
+/*--------------------------------------------*/
